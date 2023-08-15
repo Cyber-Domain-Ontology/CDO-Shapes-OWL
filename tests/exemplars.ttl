@@ -1,4 +1,4 @@
-# imports: http://example.org/shapes/example
+# imports: https://ontology.unifiedcyberontology.org/owl
 
 @prefix ex: <http://example.org/ontology/example/> .
 @prefix drafting: <http://example.org/ontology/drafting/> .
@@ -11,10 +11,39 @@
 <http://example.org/kb>
 	a owl:Ontology ;
 	rdfs:comment "This knowledge base instantiates each of the shape-reviewed classes and properties, so SHACL shapes can be exercised for the reviewed ontology."@en ;
-	owl:imports <http://example.org/shapes/example> ;
+	owl:imports <https://ontology.unifiedcyberontology.org/owl> ;
 	.
 
-kb:Thing-76f5befa-f5e1-4b2c-8d7b-ea7cf18ecca6
-	a ex:Thing ;
+<http://example.org/ontology/example>
+	a owl:Ontology ;
+	owl:incompatibleWith ex:Ontology-12cf7df2-dfa5-43da-b825-559014dbb639 ;
+	owl:versionIRI ex:Ontology-3a93c432-a5c2-4053-98b9-3a92e57d9d6f ;
+	.
+
+ex:AnnotationProperty-0e6294e7-ef16-4e89-be3f-240f22afa33d
+	a owl:AnnotationProperty ;
+	.
+
+ex:Class-d5895729-1de8-49c1-8348-1a34dbbcd463
+	a owl:Class ;
+	.
+
+ex:DatatypeProperty-e9a49c65-d72e-4a90-934a-477514276bca
+	a owl:DatatypeProperty ;
+	.
+
+ex:ObjectProperty-0f3cb51c-8c93-4064-b320-af35bf6b2d04
+	a owl:ObjectProperty ;
+	.
+
+[]
+	a owl:Axiom ;
+	.
+
+[]
+	a rdfs:Datatype ;
+	owl:oneOf (
+		""
+	) ;
 	.
 

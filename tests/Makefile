@@ -79,14 +79,11 @@ exemplars-expanded.ttl: \
 
 monolithic.ttl: \
   $(top_srcdir)/.venv.done.log \
-  $(top_srcdir)/dependencies/imports-transitive.ttl \
   $(shape_ttls)
 	source $(top_srcdir)/venv/bin/activate \
 	  && rdfpipe \
 	    --output-format turtle \
-	    $(top_srcdir)/dependencies/imports-transitive.ttl \
 	    $(shape_ttls) \
-	    $(uco_srcdir)/ontology/owl/owl.ttl \
 	    > _$@
 	source $(top_srcdir)/venv/bin/activate \
 	  && pyshacl \

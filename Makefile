@@ -23,9 +23,7 @@ all: \
   all-shapes
 
 .PHONY: \
-  all-dependencies \
   all-shapes \
-  check-dependencies \
   check-mypy \
   check-shapes \
   check-supply-chain \
@@ -38,7 +36,6 @@ all: \
 # dependency on other profiles.
 .git_submodule_init_imports.done.log: \
   .gitmodules
-	# TODO - Initialize non-CDO submodule here.
 	touch $@
 
 .git_submodule_init.done.log: \
@@ -47,7 +44,6 @@ all: \
 	  --init
 	$(MAKE) \
 	  --directory dependencies/UCO \
-	  .git_submodule_init.done.log \
 	  .lib.done.log
 	touch $@
 
@@ -90,30 +86,18 @@ all: \
 	  .venv-pre-commit/var
 	touch $@
 
-all-dependencies: \
+all-shapes: \
   .git_submodule_init.done.log \
   .venv.done.log
-	$(MAKE) \
-	  --directory dependencies
-
-all-shapes: \
-  all-dependencies
 	$(MAKE) \
 	  --directory shapes
 
 check: \
   .venv-pre-commit/var/.pre-commit-built.log \
   check-mypy \
-  check-dependencies \
   check-shapes
 	$(MAKE) \
 	  --directory tests \
-	  check
-
-check-dependencies: \
-  all-dependencies
-	$(MAKE) \
-	  --directory dependencies \
 	  check
 
 check-mypy: \
@@ -179,9 +163,6 @@ clean:
 	  clean
 	@$(MAKE) \
 	  --directory shapes \
-	  clean
-	@$(MAKE) \
-	  --directory dependencies \
 	  clean
 	@rm -f \
 	  .*.done.log
