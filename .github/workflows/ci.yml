@@ -16,9 +16,9 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ base, main ]
+    branches: [ base, main, develop* ]
   pull_request:
-    branches: [ base, main ]
+    branches: [ base, main, develop* ]
   schedule:
     - cron: '15 5 * * TUE'
 
