@@ -23,6 +23,8 @@ shape_ttls := $(wildcard $(top_srcdir)/shapes/sh-*.ttl)
 all: \
   exemplars-expanded.ttl \
   monolithic.ttl
+	$(MAKE) \
+	  --directory examples
 
 .pyshacl.done.log: \
   exemplars-expanded.ttl \
@@ -41,14 +43,22 @@ all: \
   test_exemplar_coverage.py
 	source $(top_srcdir)/venv/bin/activate \
 	  && pytest \
+	    --ignore examples \
 	    --log-level=DEBUG
 	touch $@
 
 check: \
   .pytest.done.log \
-  .pyshacl.done.log
+  .pyshacl.done.log \
+  all
+	$(MAKE) \
+	  --directory examples \
+	  check
 
 clean:
+	@$(MAKE) \
+	  --directory examples \
+	  clean
 	@rm -f \
 	  .*.done.log \
 	  monolithic.ttl
