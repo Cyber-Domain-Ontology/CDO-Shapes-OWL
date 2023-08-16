@@ -23,6 +23,7 @@ all: \
   all-shapes
 
 .PHONY: \
+  all-lib \
   all-shapes \
   check-mypy \
   check-shapes \
@@ -42,9 +43,6 @@ all: \
   .git_submodule_init_imports.done.log
 	git submodule update \
 	  --init
-	$(MAKE) \
-	  --directory dependencies/UCO \
-	  .lib.done.log
 	touch $@
 
 .venv.done.log: \
@@ -86,13 +84,18 @@ all: \
 	  .venv-pre-commit/var
 	touch $@
 
+all-lib:
+	$(MAKE) \
+	  --directory lib
+
 all-shapes: \
-  .git_submodule_init.done.log \
-  .venv.done.log
+  .venv.done.log \
+  all-lib
 	$(MAKE) \
 	  --directory shapes
 
 check: \
+  .git_submodule_init.done.log \
   .venv-pre-commit/var/.pre-commit-built.log \
   check-mypy \
   check-shapes

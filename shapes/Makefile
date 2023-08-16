@@ -18,9 +18,7 @@ SHELL := /bin/bash
 
 top_srcdir := $(shell cd .. ; pwd)
 
-uco_srcdir := $(top_srcdir)/dependencies/UCO
-
-RDF_TOOLKIT_JAR := $(uco_srcdir)/lib/rdf-toolkit.jar
+RDF_TOOLKIT_JAR := $(top_srcdir)/lib/rdf-toolkit.jar
 
 ttl_basenames := $(wildcard sh-*.ttl)
 
