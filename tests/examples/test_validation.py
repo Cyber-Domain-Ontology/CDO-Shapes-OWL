@@ -26,7 +26,7 @@ the only functions to be called to be named "test_*".
 """
 
 import logging
-import typing
+from typing import Any, Optional, Set, Tuple
 
 from rdflib import SH, Graph, Literal, URIRef
 from rdflib.plugins.sparql.processor import prepareQuery
@@ -69,12 +69,10 @@ WHERE {
 def confirm_validation_results(
     filename: str,
     expected_conformance: bool,
-    *args: typing.Any,
-    expected_focus_node_severities: typing.Optional[
-        typing.Set[typing.Tuple[str, str]]
-    ] = None,
-    expected_result_paths: typing.Optional[typing.Set[str]] = None,
-    expected_source_shapes: typing.Optional[typing.Set[str]] = None
+    *args: Any,
+    expected_focus_node_severities: Optional[Set[Tuple[str, str]]] = None,
+    expected_result_paths: Optional[Set[str]] = None,
+    expected_source_shapes: Optional[Set[str]] = None
 ) -> None:
     """
     The expected-sets are sets where names are known.
