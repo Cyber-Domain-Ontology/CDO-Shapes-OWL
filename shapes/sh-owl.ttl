@@ -2,20 +2,21 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sh-owl: <https://shapes.cyberdomainontology.org/owl/> .
 @prefix uco-owl: <https://ontology.unifiedcyberontology.org/owl/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://ontology.unifiedcyberontology.org/owl>
+<https://shapes.cyberdomainontology.org/owl>
 	a owl:Ontology ;
-	rdfs:label "uco-owl"@en ;
+	rdfs:label "sh-owl"@en ;
 	rdfs:comment "This ontology defines SHACL shapes to perform conformance testing of OWL 2 DL.  Some of these shapes follow rules specified from the canonical, subtractive parsing process of Section 3 of the OWL 2 mapping to RDF.  From the last line of that document's Section 3, 'At the end of this process, the graph G MUST be empty,' anything not strictly matching patterns specified in that section cause the input graph to be non-conformant with OWL 2 DL."@en ;
 	rdfs:seeAlso <https://www.w3.org/TR/2012/REC-owl2-mapping-to-rdf-20121211/#Mapping_from_RDF_Graphs_to_the_Structural_Specification> ;
-	owl:backwardCompatibleWith uco-owl:1.1.0 ;
-	owl:priorVersion uco-owl:1.1.0 ;
-	owl:versionIRI uco-owl:1.2.0 ;
+	owl:backwardCompatibleWith uco-owl:1.2.0 ;
+	owl:priorVersion uco-owl:1.2.0 ;
+	owl:versionIRI sh-owl:1.2.0 ;
 	.
 
-uco-owl:Axiom-shape
+sh-owl:Axiom-shape
 	a sh:NodeShape ;
 	sh:sparql [
 		a sh:SPARQLConstraint ;
@@ -34,7 +35,7 @@ uco-owl:Axiom-shape
 	sh:targetClass owl:Axiom ;
 	.
 
-uco-owl:DataOneOf-shape
+sh-owl:DataOneOf-shape
 	a sh:NodeShape ;
 	sh:sparql [
 		a sh:SPARQLConstraint ;
@@ -56,7 +57,7 @@ uco-owl:DataOneOf-shape
 	sh:targetSubjectsOf owl:oneOf ;
 	.
 
-uco-owl:DatatypeProperty-shacl-constraints-shape
+sh-owl:DatatypeProperty-shacl-constraints-shape
 	a sh:NodeShape ;
 	sh:sparql
 		[
@@ -110,7 +111,7 @@ uco-owl:DatatypeProperty-shacl-constraints-shape
 	sh:targetClass owl:DatatypeProperty ;
 	.
 
-uco-owl:Disjointedness-AP-DP-shape
+sh-owl:Disjointedness-AP-DP-shape
 	a sh:NodeShape ;
 	sh:sparql [
 		a sh:SPARQLConstraint ;
@@ -127,7 +128,7 @@ uco-owl:Disjointedness-AP-DP-shape
 	sh:targetClass owl:AnnotationProperty ;
 	.
 
-uco-owl:Disjointedness-AP-OP-shape
+sh-owl:Disjointedness-AP-OP-shape
 	a sh:NodeShape ;
 	sh:sparql [
 		a sh:SPARQLConstraint ;
@@ -144,7 +145,7 @@ uco-owl:Disjointedness-AP-OP-shape
 	sh:targetClass owl:AnnotationProperty ;
 	.
 
-uco-owl:Disjointedness-C-DT-shape
+sh-owl:Disjointedness-C-DT-shape
 	a sh:NodeShape ;
 	sh:sparql [
 		a sh:SPARQLConstraint ;
@@ -161,7 +162,7 @@ uco-owl:Disjointedness-C-DT-shape
 	sh:targetClass owl:Class ;
 	.
 
-uco-owl:Disjointedness-DP-OP-shape
+sh-owl:Disjointedness-DP-OP-shape
 	a sh:NodeShape ;
 	sh:sparql [
 		a sh:SPARQLConstraint ;
@@ -178,7 +179,7 @@ uco-owl:Disjointedness-DP-OP-shape
 	sh:targetClass owl:DatatypeProperty ;
 	.
 
-uco-owl:List-shape
+sh-owl:List-shape
 	a sh:NodeShape ;
 	sh:property [
 		a sh:PropertyShape ;
@@ -200,7 +201,7 @@ uco-owl:List-shape
 	sh:targetSubjectsOf rdf:first ;
 	.
 
-uco-owl:ObjectProperty-shacl-constraints-shape
+sh-owl:ObjectProperty-shacl-constraints-shape
 	a sh:NodeShape ;
 	sh:sparql
 		[
@@ -250,7 +251,7 @@ uco-owl:ObjectProperty-shacl-constraints-shape
 	sh:targetClass owl:ObjectProperty ;
 	.
 
-uco-owl:incompatibleWith-direct-import-shape
+sh-owl:incompatibleWith-direct-import-shape
 	a sh:PropertyShape ;
 	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
 	sh:disjoint owl:incompatibleWith ;
@@ -260,7 +261,7 @@ uco-owl:incompatibleWith-direct-import-shape
 	sh:targetClass owl:Ontology ;
 	.
 
-uco-owl:incompatibleWith-imported-ontology-iri-shape
+sh-owl:incompatibleWith-imported-ontology-iri-shape
 	a sh:NodeShape ;
 	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
 	sh:message "'The import closure of [ontology] O SHOULD NOT contain ontologies O_1 and O_2 such that ... O_1 contains an ontology annotation owl:incompatibleWith with the value equal to either the ontology IRI or the version IRI of O_2.'  The focusNode, or a versionIRI of it, is imported within the transitive closure of some O, but is incompatible with some O_1 also within the transitive closure of O."@en ;
@@ -273,7 +274,7 @@ uco-owl:incompatibleWith-imported-ontology-iri-shape
 	sh:targetObjectsOf owl:incompatibleWith ;
 	.
 
-uco-owl:incompatibleWith-imported-version-iri-shape
+sh-owl:incompatibleWith-imported-version-iri-shape
 	a sh:PropertyShape ;
 	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
 	sh:maxCount "0"^^xsd:integer ;
@@ -285,7 +286,7 @@ uco-owl:incompatibleWith-imported-version-iri-shape
 	sh:targetObjectsOf owl:incompatibleWith ;
 	.
 
-uco-owl:ontologyIRI-versionIRI-prerequisite-shape
+sh-owl:ontologyIRI-versionIRI-prerequisite-shape
 	a sh:NodeShape ;
 	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Ontology_IRI_and_Version_IRI> ;
 	sh:message "'An ontology without an ontology IRI MUST NOT contain a version IRI.'"@en ;
@@ -293,7 +294,7 @@ uco-owl:ontologyIRI-versionIRI-prerequisite-shape
 	sh:targetSubjectsOf owl:versionIRI ;
 	.
 
-uco-owl:versionIRI-multiversion-shape
+sh-owl:versionIRI-multiversion-shape
 	a sh:PropertyShape ;
 	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
 	sh:maxCount "1"^^xsd:integer ;
@@ -303,7 +304,7 @@ uco-owl:versionIRI-multiversion-shape
 	sh:targetSubjectsOf owl:versionIRI ;
 	.
 
-uco-owl:versionIRI-nodeKind-shape
+sh-owl:versionIRI-nodeKind-shape
 	a sh:PropertyShape ;
 	sh:nodeKind sh:IRI ;
 	sh:path owl:versionIRI ;

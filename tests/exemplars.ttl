@@ -1,4 +1,4 @@
-# imports: https://ontology.unifiedcyberontology.org/owl
+# imports: http://shapes.cyberdomainontology.org/owl
 
 @prefix ex: <http://example.org/ontology/example/> .
 @prefix drafting: <http://example.org/ontology/drafting/> .
@@ -11,7 +11,7 @@
 <http://example.org/kb>
 	a owl:Ontology ;
 	rdfs:comment "This knowledge base instantiates each of the shape-reviewed classes and properties, so SHACL shapes can be exercised for the reviewed ontology."@en ;
-	owl:imports <https://ontology.unifiedcyberontology.org/owl> ;
+	owl:imports <https://shapes.cyberdomainontology.org/owl> ;
 	.
 
 <http://example.org/ontology/example>
