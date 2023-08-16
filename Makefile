@@ -95,7 +95,6 @@ all-shapes: \
 	  --directory shapes
 
 check: \
-  .git_submodule_init.done.log \
   .venv-pre-commit/var/.pre-commit-built.log \
   check-mypy \
   check-shapes
