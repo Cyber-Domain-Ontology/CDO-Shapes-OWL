@@ -275,14 +275,18 @@ sh-owl:incompatibleWith-imported-ontology-iri-shape
 	.
 
 sh-owl:incompatibleWith-imported-version-iri-shape
-	a sh:PropertyShape ;
-	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
-	sh:maxCount "0"^^xsd:integer ;
-	sh:message "'The import closure of [ontology] O SHOULD NOT contain ontologies O_1 and O_2 such that ... O_1 contains an ontology annotation owl:incompatibleWith with the value equal to ... the version IRI of O_2.'  The focusNode is incompatible with some O_1 within the transitive closure of some O."@en ;
-	sh:path [
-		sh:inversePath owl:versionIRI ;
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		rdfs:comment "This shape is an anonymous PropertyShape to avoid multiple-import issues on sh:path and its blank node object."@en ;
+		rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
+		sh:maxCount "0"^^xsd:integer ;
+		sh:message "'The import closure of [ontology] O SHOULD NOT contain ontologies O_1 and O_2 such that ... O_1 contains an ontology annotation owl:incompatibleWith with the value equal to ... the version IRI of O_2.'  The focusNode is incompatible with some O_1 within the transitive closure of some O."@en ;
+		sh:path [
+			sh:inversePath owl:versionIRI ;
+		] ;
+		sh:severity sh:Warning ;
 	] ;
-	sh:severity sh:Warning ;
 	sh:targetObjectsOf owl:incompatibleWith ;
 	.
 
