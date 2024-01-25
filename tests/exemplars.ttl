@@ -1,7 +1,7 @@
-# imports: http://shapes.cyberdomainontology.org/owl
+# imports: https://shapes.cyberdomainontology.org/owl
 
-@prefix ex: <http://example.org/ontology/example/> .
 @prefix drafting: <http://example.org/ontology/drafting/> .
+@prefix ex: <http://example.org/ontology/example/> .
 @prefix kb: <http://example.org/kb/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -24,8 +24,158 @@ ex:AnnotationProperty-0e6294e7-ef16-4e89-be3f-240f22afa33d
 	a owl:AnnotationProperty ;
 	.
 
+ex:Class-2017f153-97f3-417f-b611-096ca48b0025
+	a owl:Class ;
+	rdfs:subClassOf [
+		a owl:Restriction ;
+		owl:onProperty ex:DatatypeProperty-64bb66a5-798a-4e0b-874b-6d995ab784a2 ;
+		owl:allValuesFrom xsd:integer ;
+	] ;
+	.
+
+ex:Class-3a32cacb-164d-4031-8439-15da51798acd
+	a owl:Class ;
+	rdfs:subClassOf [
+		a owl:Class ;
+		owl:unionOf (
+			ex:Class-b7890f9d-d238-48e5-a070-fdd12cf98b54
+			ex:Class-f4fb751f-2454-445d-be8d-dd67888f0d5f
+		) ;
+	] ;
+	.
+
+ex:Class-4a8b86a7-08d2-4f7b-9a5d-bdc97b892ef4
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate member of owl:intersectionOf."@en ;
+	.
+
+ex:Class-5640e4cd-06c1-45c0-a92e-5d7f6b0e6fb4
+	a owl:Class ;
+	rdfs:subClassOf [
+		a owl:Class ;
+		owl:intersectionOf (
+			ex:Class-60a36303-eb0e-452d-b514-99e2f45cf5a9
+			ex:Class-8b5c6775-b5a6-458b-828d-e134e0e1e79d
+		) ;
+	] ;
+	.
+
+ex:Class-60a36303-eb0e-452d-b514-99e2f45cf5a9
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate member of owl:intersectionOf."@en ;
+	.
+
+ex:Class-775b3fbb-9485-45be-bdc4-16eda94bb7f5
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate member of owl:disjointUnionOf."@en ;
+	.
+
+ex:Class-7bdc28a4-2faf-4070-b7d8-d5bfdea1941b
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate member of owl:disjointUnionOf."@en ;
+	.
+
+ex:Class-853ed39d-a509-49a1-8d81-99dd7c4f0bff
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate subject of owl:hasKey."@en ;
+	owl:hasKey (
+		ex:DatatypeProperty-0c899d6e-6030-4080-8074-19a4120dbec6
+		ex:ObjectProperty-10889e59-6ea5-46c4-a6fa-ffe837eeeb2b
+		ex:DatatypeProperty-536adaec-098a-4d5e-bc2c-38c4440e03b4
+		ex:ObjectProperty-e4747283-0f61-49da-9feb-4f73ed724015
+	) ;
+	.
+
+ex:Class-8b5c6775-b5a6-458b-828d-e134e0e1e79d
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate member of owl:intersectionOf."@en ;
+	.
+
+ex:Class-b7890f9d-d238-48e5-a070-fdd12cf98b54
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate member of owl:unionOf."@en ;
+	.
+
 ex:Class-d5895729-1de8-49c1-8348-1a34dbbcd463
 	a owl:Class ;
+	.
+
+ex:Class-d7316c48-8616-4754-84b1-b17745f91e92
+	a owl:Class ;
+	rdfs:subClassOf [
+		a owl:Restriction ;
+		owl:allValuesFrom xsd:integer ;
+		owl:onProperties (
+			ex:DatatypeProperty-76981918-ac99-4423-aeb6-2ce760debc4a
+			ex:DatatypeProperty-9e6f4b87-1fe4-4c9f-9a26-4e0a33d4ba99
+		) ;
+	] ;
+	.
+
+ex:Class-d7b09210-59c0-4149-8f86-65a11ad9e992
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate subject of owl:disjointUnionOf."@en ;
+	owl:disjointUnionOf (
+		ex:Class-775b3fbb-9485-45be-bdc4-16eda94bb7f5
+		ex:Class-7bdc28a4-2faf-4070-b7d8-d5bfdea1941b
+	) ;
+	.
+
+ex:Class-f4fb751f-2454-445d-be8d-dd67888f0d5f
+	a owl:Class ;
+	rdfs:comment "Instantiated to demonstrate member of owl:unionOf."@en ;
+	.
+
+ex:Datatype-76889d10-0a93-4d8d-8ced-7c65dccbea86
+	a rdfs:Datatype ;
+	rdfs:comment "Instantiated to demonstrate subject of owl:withRestrictions."@en ;
+	owl:equivalentClass [
+		a rdfs:Datatype ;
+		owl:onDatatype xsd:integer ;
+		owl:withRestrictions (
+			[
+				xsd:minInclusive "-1"^^xsd:integer ;
+			]
+			[
+				xsd:maxInclusive "1"^^xsd:integer ;
+			]
+		) ;
+	] ;
+	.
+
+ex:Datatype-f3c3f7dc-20de-47ca-9460-567d42be66a4
+	a rdfs:Datatype ;
+	owl:equivalentClass [
+		a rdfs:Datatype ;
+		owl:oneOf (
+			""
+		) ;
+	] ;
+	.
+
+ex:DatatypeProperty-0c899d6e-6030-4080-8074-19a4120dbec6
+	a owl:DatatypeProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:hasKey."@en ;
+	.
+
+ex:DatatypeProperty-536adaec-098a-4d5e-bc2c-38c4440e03b4
+	a owl:DatatypeProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:hasKey."@en ;
+	.
+
+ex:DatatypeProperty-64bb66a5-798a-4e0b-874b-6d995ab784a2
+	a owl:DatatypeProperty ;
+	rdfs:comment "Instantiated to demonstrate object of owl:onProperty."@en ;
+	.
+
+ex:DatatypeProperty-76981918-ac99-4423-aeb6-2ce760debc4a
+	a owl:DatatypeProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:onProperties."@en ;
+	.
+
+ex:DatatypeProperty-9e6f4b87-1fe4-4c9f-9a26-4e0a33d4ba99
+	a owl:DatatypeProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:onProperties."@en ;
 	.
 
 ex:DatatypeProperty-e9a49c65-d72e-4a90-934a-477514276bca
@@ -36,14 +186,79 @@ ex:ObjectProperty-0f3cb51c-8c93-4064-b320-af35bf6b2d04
 	a owl:ObjectProperty ;
 	.
 
-[]
-	a owl:Axiom ;
+ex:ObjectProperty-10889e59-6ea5-46c4-a6fa-ffe837eeeb2b
+	a owl:ObjectProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:hasKey."@en ;
+	.
+
+ex:ObjectProperty-395ada43-e0bd-45d5-b865-3d867b5eaf71
+	a owl:ObjectProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:propertyChainAxiom."@en ;
+	.
+
+ex:ObjectProperty-4fe96a39-7527-49e3-9ca3-fff216267fd6
+	a owl:ObjectProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:propertyChainAxiom."@en ;
+	.
+
+ex:ObjectProperty-e20869a5-a344-41f7-995a-5fa5ba945ed2
+	a owl:ObjectProperty ;
+	owl:propertyChainAxiom (
+		ex:ObjectProperty-395ada43-e0bd-45d5-b865-3d867b5eaf71
+		ex:ObjectProperty-4fe96a39-7527-49e3-9ca3-fff216267fd6
+	) ;
+	.
+
+ex:ObjectProperty-e4747283-0f61-49da-9feb-4f73ed724015
+	a owl:ObjectProperty ;
+	rdfs:comment "Instantiated to demonstrate member of owl:hasKey."@en ;
+	.
+
+ex:Thing-02d70a0d-9469-4d46-a609-8c6333d0ac20
+	a owl:Thing ;
+	rdfs:comment "Instantiated to demonstrate member of owl:distinctMembers."@en ;
+	.
+
+ex:Thing-65bc6823-dedd-4155-a533-4c3e4a1ffc8d
+	a owl:Thing ;
+	rdfs:comment "Instantiated to demonstrate member of owl:members."@en ;
+	.
+
+ex:Thing-c40b814d-935d-4568-b618-6f4dcf96796e
+	a owl:Thing ;
+	rdfs:comment "Instantiated to demonstrate member of owl:members."@en ;
+	.
+
+ex:Thing-d18871bd-f7fa-44df-9b10-762811887bee
+	a owl:Thing ;
+	rdfs:comment "Instantiated to demonstrate owl:Axiom."@en ;
+	.
+
+ex:Thing-fddcf8de-e7e7-4b0b-a30e-d215ba09bd77
+	a owl:Thing ;
+	rdfs:comment "Instantiated to demonstrate member of owl:distinctMembers."@en ;
 	.
 
 []
-	a rdfs:Datatype ;
-	owl:oneOf (
-		""
+	a owl:AllDifferent ;
+	owl:distinctMembers (
+		ex:Thing-02d70a0d-9469-4d46-a609-8c6333d0ac20
+		ex:Thing-fddcf8de-e7e7-4b0b-a30e-d215ba09bd77
 	) ;
+	.
+
+[]
+	a owl:AllDifferent ;
+	owl:members (
+		ex:Thing-65bc6823-dedd-4155-a533-4c3e4a1ffc8d
+		ex:Thing-c40b814d-935d-4568-b618-6f4dcf96796e
+	) ;
+	.
+
+[]
+	a owl:Axiom ;
+	owl:annotatedProperty rdf:type ;
+	owl:annotatedSource ex:Thing-d18871bd-f7fa-44df-9b10-762811887bee ;
+	owl:annotatedTarget owl:Thing ;
 	.
 
