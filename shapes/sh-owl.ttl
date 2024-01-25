@@ -11,9 +11,15 @@
 	rdfs:label "sh-owl"@en ;
 	rdfs:comment "This ontology defines SHACL shapes to perform conformance testing of OWL 2 DL.  Some of these shapes follow rules specified from the canonical, subtractive parsing process of Section 3 of the OWL 2 mapping to RDF.  From the last line of that document's Section 3, 'At the end of this process, the graph G MUST be empty,' anything not strictly matching patterns specified in that section cause the input graph to be non-conformant with OWL 2 DL."@en ;
 	rdfs:seeAlso <https://www.w3.org/TR/2012/REC-owl2-mapping-to-rdf-20121211/#Mapping_from_RDF_Graphs_to_the_Structural_Specification> ;
-	owl:backwardCompatibleWith uco-owl:1.2.0 ;
-	owl:priorVersion uco-owl:1.2.0 ;
-	owl:versionIRI sh-owl:1.2.0 ;
+	owl:backwardCompatibleWith
+		uco-owl:1.3.0 ,
+		sh-owl:1.2.0
+		;
+	owl:priorVersion
+		uco-owl:1.3.0 ,
+		sh-owl:1.2.0
+		;
+	owl:versionIRI sh-owl:1.3.0 ;
 	.
 
 sh-owl:Axiom-shape
@@ -180,25 +186,14 @@ sh-owl:Disjointedness-DP-OP-shape
 	.
 
 sh-owl:List-shape
-	a sh:NodeShape ;
-	sh:property [
-		a sh:PropertyShape ;
-		sh:maxCount "1"^^xsd:integer ;
-		sh:path rdf:first ;
-	] ;
-	sh:sparql [
-		a sh:SPARQLConstraint ;
-		rdfs:comment "This requirement is determined from review of the canonical parsing process in Section 3 of the OWL 2 mapping to RDF.  Table 5 removes any triple matching the pattern 'x a rdf:List`.  All other references throughout Section 3 to rdf:first are identified as blank nodes.  Therefore, any non-blank node that is an rdf:List will not be mapped and consumed by the mapping process, making the graph non-conformant with OWL 2 DL."@en ;
-		rdfs:seeAlso <https://www.w3.org/TR/2012/REC-owl2-mapping-to-rdf-20121211/#Mapping_from_RDF_Graphs_to_the_Structural_Specification> ;
-		sh:message "The subject of a triple with rdf:first as predicate must be a blank node."@en ;
-		sh:select """
-			SELECT $this
-			WHERE {
-				FILTER isIRI($this)
-			}
-		""" ;
-	] ;
-	sh:targetSubjectsOf rdf:first ;
+	a sh:Shape ;
+	rdfs:comment "This shape's functionality has been exported"@en ;
+	rdfs:seeAlso
+		sh-owl:Sequence-shape ,
+		sh-owl:rdf-first-subjects-shape ,
+		sh-owl:rdf-rest-subjects-shape
+		;
+	sh:deactivated "true"^^xsd:boolean ;
 	.
 
 sh-owl:ObjectProperty-shacl-constraints-shape
@@ -251,6 +246,75 @@ sh-owl:ObjectProperty-shacl-constraints-shape
 	sh:targetClass owl:ObjectProperty ;
 	.
 
+sh-owl:Sequence-shape
+	a sh:NodeShape ;
+	rdfs:comment "This shape intentionally has no target declaration.  It is instead intended to be incorporated using 'sh:node'."@en ;
+	rdfs:seeAlso <https://www.w3.org/TR/2012/REC-owl2-mapping-to-rdf-20121211/#Mapping_from_RDF_Graphs_to_the_Structural_Specification> ;
+	sh:description "This shape is determined from review of the canonical parsing process in Section 3 of the OWL 2 mapping to RDF, particularly Tables 3 and 5.  Table 5 removes any triple matching the pattern 'x a rdf:List`.  All other references throughout Section 3 to rdf:first are in the context of mapping a Sequence in OWL structure translation, and are denoted as blank nodes, starting with Table 3.  A non-blank node that is an rdf:List and used with a sequence-valued property IRI in the OWL namespace will not be mapped and consumed by the mapping process, making the graph non-conformant with OWL 2 DL.  But a non-blank node that is an rdf:List can be used if not directly attached to a sequence-valued property IRI in the OWL namespace."@en ;
+	sh:xone (
+		[
+			a sh:NodeShape ;
+			sh:hasValue rdf:nil ;
+		]
+		[
+			a sh:NodeShape ;
+			sh:nodeKind sh:BlankNode ;
+			sh:property [
+				a sh:PropertyShape ;
+				sh:path [
+					sh:oneOrMorePath rdf:rest ;
+				] ;
+				sh:xone (
+					[
+						a sh:NodeShape ;
+						sh:hasValue rdf:nil ;
+					]
+					[
+						a sh:NodeShape ;
+						sh:nodeKind sh:BlankNode ;
+						sh:property [
+							a sh:PropertyShape ;
+							sh:maxCount "1"^^xsd:integer ;
+							sh:minCount "1"^^xsd:integer ;
+							sh:path rdf:first ;
+						] ;
+					]
+				) ;
+			] ;
+		]
+	) ;
+	.
+
+sh-owl:disjointUnionOf-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:disjointUnionOf ;
+	] ;
+	sh:targetSubjectsOf owl:disjointUnionOf ;
+	.
+
+sh-owl:distinctMembers-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:distinctMembers ;
+	] ;
+	sh:targetSubjectsOf owl:distinctMembers ;
+	.
+
+sh-owl:hasKey-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:hasKey ;
+	] ;
+	sh:targetSubjectsOf owl:hasKey ;
+	.
+
 sh-owl:incompatibleWith-direct-import-shape
 	a sh:PropertyShape ;
 	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
@@ -275,19 +339,55 @@ sh-owl:incompatibleWith-imported-ontology-iri-shape
 	.
 
 sh-owl:incompatibleWith-imported-version-iri-shape
+	a sh:PropertyShape ;
+	rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
+	sh:maxCount "0"^^xsd:integer ;
+	sh:message "'The import closure of [ontology] O SHOULD NOT contain ontologies O_1 and O_2 such that ... O_1 contains an ontology annotation owl:incompatibleWith with the value equal to ... the version IRI of O_2.'  The focusNode is incompatible with some O_1 within the transitive closure of some O."@en ;
+	sh:path [
+		sh:inversePath owl:versionIRI ;
+	] ;
+	sh:severity sh:Warning ;
+	sh:targetObjectsOf owl:incompatibleWith ;
+	.
+
+sh-owl:intersectionOf-subjects-shape
 	a sh:NodeShape ;
 	sh:property [
 		a sh:PropertyShape ;
-		rdfs:comment "This shape is an anonymous PropertyShape to avoid multiple-import issues on sh:path and its blank node object."@en ;
-		rdfs:seeAlso <https://www.w3.org/TR/owl2-syntax/#Imports> ;
-		sh:maxCount "0"^^xsd:integer ;
-		sh:message "'The import closure of [ontology] O SHOULD NOT contain ontologies O_1 and O_2 such that ... O_1 contains an ontology annotation owl:incompatibleWith with the value equal to ... the version IRI of O_2.'  The focusNode is incompatible with some O_1 within the transitive closure of some O."@en ;
-		sh:path [
-			sh:inversePath owl:versionIRI ;
-		] ;
-		sh:severity sh:Warning ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:intersectionOf ;
 	] ;
-	sh:targetObjectsOf owl:incompatibleWith ;
+	sh:targetSubjectsOf owl:intersectionOf ;
+	.
+
+sh-owl:members-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:members ;
+	] ;
+	sh:targetSubjectsOf owl:members ;
+	.
+
+sh-owl:onProperties-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:onProperties ;
+	] ;
+	sh:targetSubjectsOf owl:onProperties ;
+	.
+
+sh-owl:oneOf-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:oneOf ;
+	] ;
+	sh:targetSubjectsOf owl:oneOf ;
 	.
 
 sh-owl:ontologyIRI-versionIRI-prerequisite-shape
@@ -296,6 +396,60 @@ sh-owl:ontologyIRI-versionIRI-prerequisite-shape
 	sh:message "'An ontology without an ontology IRI MUST NOT contain a version IRI.'"@en ;
 	sh:nodeKind sh:IRI ;
 	sh:targetSubjectsOf owl:versionIRI ;
+	.
+
+sh-owl:propertyChainAxiom-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:propertyChainAxiom ;
+	] ;
+	sh:targetSubjectsOf owl:propertyChainAxiom ;
+	.
+
+sh-owl:rdf-first-subjects-shape
+	a sh:NodeShape ;
+	sh:property
+		[
+			a sh:PropertyShape ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:path rdf:first ;
+		] ,
+		[
+			a sh:PropertyShape ;
+			sh:minCount "1"^^xsd:integer ;
+			sh:path rdf:rest ;
+		]
+		;
+	sh:targetSubjectsOf rdf:first ;
+	.
+
+sh-owl:rdf-rest-subjects-shape
+	a sh:NodeShape ;
+	sh:property
+		[
+			a sh:PropertyShape ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:path rdf:rest ;
+		] ,
+		[
+			a sh:PropertyShape ;
+			sh:minCount "1"^^xsd:integer ;
+			sh:path rdf:first ;
+		]
+		;
+	sh:targetSubjectsOf rdf:rest ;
+	.
+
+sh-owl:unionOf-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:unionOf ;
+	] ;
+	sh:targetSubjectsOf owl:unionOf ;
 	.
 
 sh-owl:versionIRI-multiversion-shape
@@ -313,5 +467,15 @@ sh-owl:versionIRI-nodeKind-shape
 	sh:nodeKind sh:IRI ;
 	sh:path owl:versionIRI ;
 	sh:targetSubjectsOf owl:versionIRI ;
+	.
+
+sh-owl:withRestrictions-subjects-shape
+	a sh:NodeShape ;
+	sh:property [
+		a sh:PropertyShape ;
+		sh:node sh-owl:Sequence-shape ;
+		sh:path owl:withRestrictions ;
+	] ;
+	sh:targetSubjectsOf owl:withRestrictions ;
 	.
 
