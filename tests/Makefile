@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
-# Portions of this file contributed by NIST are governed by the following
-# statement:
+# Portions of this file contributed by NIST are governed by the
+# following statement:
 #
 # This software was developed at the National Institute of Standards
 # and Technology by employees of the Federal Government in the course
@@ -21,8 +21,7 @@ top_srcdir := $(shell cd .. ; pwd)
 shape_ttls := $(wildcard $(top_srcdir)/shapes/sh-*.ttl)
 
 all: \
-  exemplars-expanded.ttl \
-  monolithic.ttl
+  exemplars-expanded.ttl
 	$(MAKE) \
 	  --directory examples
 
@@ -38,6 +37,7 @@ all: \
 	touch $@
 
 .pytest.done.log: \
+  concepts_excused.txt \
   exemplars.ttl \
   monolithic.ttl \
   test_exemplar_coverage.py
@@ -61,15 +61,17 @@ clean:
 	  clean
 	@rm -f \
 	  .*.done.log \
+	  exemplars-entailment.ttl \
+	  exemplars-expanded.ttl \
 	  monolithic.ttl
 
 exemplars-entailment.ttl: \
   $(top_srcdir)/.venv.done.log \
-  entail.py \
+  $(top_srcdir)/src/entail.py \
   exemplars.ttl \
   monolithic.ttl
 	source $(top_srcdir)/venv/bin/activate \
-	  && python3 entail.py \
+	  && python3 $(top_srcdir)/src/entail.py \
 	    _$@ \
 	    exemplars.ttl \
 	    monolithic.ttl
