@@ -43,6 +43,9 @@ all: \
   monolithic.ttl \
   test_exemplar_coverage.py
 	source $(top_srcdir)/venv/bin/activate \
+	  && python3 -m doctest \
+	    test_exemplar_coverage.py
+	source $(top_srcdir)/venv/bin/activate \
 	  && pytest \
 	    --ignore examples \
 	    --log-level=DEBUG
