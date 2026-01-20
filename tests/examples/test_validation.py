@@ -118,7 +118,7 @@ WHERE {
         assert result[1] is None or isinstance(result[1], IdentifiedNode)
         assert isinstance(result[2], URIRef)
         assert isinstance(result[3], IdentifiedNode)
-        (n_focus_node, n_result_path, n_severity, n_source_shape) = result
+        n_focus_node, n_result_path, n_severity, n_source_shape = result
 
         computed_focus_node_severities.add((str(n_focus_node), str(n_severity)))
 
