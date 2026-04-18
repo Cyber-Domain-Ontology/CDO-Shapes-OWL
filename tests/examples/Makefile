@@ -46,7 +46,7 @@ all: \
 %_validation.ttl: \
   %.json \
   $(top_srcdir)/.venv.done.log \
-  $(tests_srcdir)/monolithic.ttl
+  $(top_srcdir)/shapes/generated-shapes.ttl
 	source $(top_srcdir)/venv/bin/activate \
 	  && pyshacl \
 	    --allow-warnings \
@@ -54,9 +54,8 @@ all: \
 	    --format turtle \
 	    --inference none \
 	    --ont-file-format turtle \
-	    --ont-graph $(tests_srcdir)/monolithic.ttl \
 	    --output __$@ \
-	    --shacl $(tests_srcdir)/monolithic.ttl \
+	    --shacl $(top_srcdir)/shapes/generated-shapes.ttl \
 	    --shacl-file-format turtle \
 	    $< \
 	    ; rc=$$? ; test 0 -eq $$rc -o 1 -eq $$rc

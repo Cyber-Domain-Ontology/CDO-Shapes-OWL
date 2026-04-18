@@ -20,17 +20,26 @@ PYTHON3 ?= python3
 
 all: \
   .venv-pre-commit/var/.pre-commit-built.log \
-  all-shapes
+  all-shapes \
+  all-tests
 
 .PHONY: \
   all-lib \
+  all-ontology \
   all-shapes \
+  all-tests \
   check-mypy \
+  check-ontology \
   check-shapes \
+  check-tests \
   check-supply-chain \
   check-supply-chain-cdo-shapes \
   check-supply-chain-pre-commit \
-  check-supply-chain-submodules
+  check-supply-chain-submodules \
+  clean-dependencies \
+  clean-ontology \
+  clean-shapes \
+  clean-tests
 
 # This Make target should be left in place, even if it does nothing.  It
 # has been found beneficial with profiles that have a submodule-based
@@ -88,19 +97,26 @@ all-lib:
 	$(MAKE) \
 	  --directory lib
 
-all-shapes: \
+all-ontology: \
   .venv.done.log \
   all-lib
 	$(MAKE) \
+	  --directory ontology
+
+all-shapes: \
+  all-ontology
+	$(MAKE) \
 	  --directory shapes
+
+all-tests: \
+  all-ontology
+	$(MAKE) \
+	  --directory tests
 
 check: \
   .venv-pre-commit/var/.pre-commit-built.log \
   check-mypy \
-  check-shapes
-	$(MAKE) \
-	  --directory tests \
-	  check
+  check-tests
 
 check-mypy: \
   .venv.done.log
@@ -111,8 +127,15 @@ check-mypy: \
 	    --strict \
 	    .
 
+check-ontology: \
+  all-ontology
+	$(MAKE) \
+	  --directory ontology \
+	  check
+
 check-shapes: \
-  all-shapes
+  all-shapes \
+  check-ontology
 	$(MAKE) \
 	  --directory shapes \
 	  check
@@ -182,12 +205,36 @@ check-supply-chain-submodules: \
 	  --ignore-submodules=dirty \
 	  dependencies
 
-clean:
-	@$(MAKE) \
+check-tests: \
+  all-tests \
+  check-shapes
+	$(MAKE) \
 	  --directory tests \
+	  check
+
+clean: \
+  clean-tests \
+  clean-shapes \
+  clean-ontology
+	@rm -f \
+	  .*.done.log
+
+clean-dependencies:
+	@$(MAKE) \
+	  --directory dependencies \
 	  clean
+
+clean-ontology:
+	@$(MAKE) \
+	  --directory ontology \
+	  clean
+
+clean-shapes:
 	@$(MAKE) \
 	  --directory shapes \
 	  clean
-	@rm -f \
-	  .*.done.log
+
+clean-tests:
+	@$(MAKE) \
+	  --directory tests \
+	  clean
