@@ -22,6 +22,7 @@ all: \
   generated-exemplars-expanded.ttl
 
 .pyshacl.done.log: \
+  $(top_srcdir)/ontology/generated-ontology.ttl \
   $(top_srcdir)/shapes/generated-shapes.ttl \
   generated-exemplars-expanded.ttl
 	source $(top_srcdir)/venv/bin/activate \
